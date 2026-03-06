@@ -176,22 +176,22 @@ romantica:["Voce e o motivo do meu sorriso todo dia","Cada dia ao seu lado e o m
 sedutora:["Seu sorriso deveria ser proibido","Voce me olha e eu perco o raciocinio","Quando voce fala meu nome fico sem resposta","Voce tem um jeito de se mover que hipnotiza","Nao consigo parar de pensar em voce","Voce torna tudo mais interessante","Quando voce esta perto meu coracao acelera","Voce tem uma energia que atrai todo mundo","So voce me faz sorrir so chegando","Voce e irresistivel de um jeito que nem percebe","Sua presenca muda o clima de qualquer lugar","Voce tem um sorriso que desafia qualquer resistencia","Do nada penso em voce e fico com sorriso bobo","Voce seduziria sem nem tentar","Voce e aquele tipo que fica na cabeca","Cada detalhe seu me fascina demais","Voce tem um jeito unico que me encanta","Nao tem como ficar entediado do seu lado","Voce me olha e eu esqueco o que ia falar","Tem algo em voce que prende minha atencao","Voce faz tudo parecer mais atraente","Seu jeito me deixa completamente conquistado","Voce fica melhor a cada dia","Quando voce sorri e dificil olhar pra outro lado","Voce me atrai de um jeito inexplicavel","Cada vez que aparece tudo fica mais interessante","Voce transforma um dia comum em especial","Nao consigo evitar querer estar perto","Voce tem uma presenca que marca onde quer que va","Voce me seduziu do primeiro olhar"]
 };
 var exclH={safada:[],romantica:[],sedutora:[]};
-function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
-function esc(s){return String(s).replace(/[&<>"]/g,function(m){return({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[m]})}
-function timeAgo(ts){var d=Date.now()-ts,s=Math.floor(d/1000),m=Math.floor(s/60),h=Math.floor(m/60),dd=Math.floor(h/24);if(s<15)return"agora mesmo";if(s<60)return"ha "+s+"s";if(m<60)return"ha "+m+"min";if(h<24)return"ha "+h+"h";return"ha "+dd+"d";}
-function toast(m){var t=document.getElementById("toast");t.textContent=m;t.classList.add("on");setTimeout(function(){t.classList.remove("on");},2500);}
-function burst(){var cx=innerWidth/2,cy=innerHeight/2,em=["+","x","o","~","*"];for(var i=0;i<5;i++){var el=document.createElement("div");el.className="hb";el.textContent=em[i];var a=(i/5)*Math.PI*2,d=80+Math.random()*60;el.style.cssText="left:"+cx+"px;top:"+cy+"px;--tx:"+Math.cos(a)*d+"px;--ty:"+(Math.sin(a)*d-60)+"px;";document.body.appendChild(el);(function(e){setTimeout(function(){e.remove();},1300);})(el);}}
-function compressImg(dataUrl,maxW,q){return new Promise(function(res){var img=new Image();img.onload=function(){var c=document.createElement("canvas"),w=img.width,h=img.height;if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}c.width=w;c.height=h;c.getContext("2d").drawImage(img,0,0,w,h);res(c.toDataURL("image/jpeg",q||0.6));};img.src=dataUrl;});}
-function closePV(){document.getElementById("pv").classList.remove("on");}
-function openPV(url){document.getElementById("pvimg").src=url;document.getElementById("pv").classList.add("on");}
+window.lsSet=function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+window.esc=function(s){return String(s).replace(/[&<>"]/g,function(m){return({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[m]})}
+window.timeAgo=function(ts){var d=Date.now()-ts,s=Math.floor(d/1000),m=Math.floor(s/60),h=Math.floor(m/60),dd=Math.floor(h/24);if(s<15)return"agora mesmo";if(s<60)return"ha "+s+"s";if(m<60)return"ha "+m+"min";if(h<24)return"ha "+h+"h";return"ha "+dd+"d";}
+window.toast=function(m){var t=document.getElementById("toast");t.textContent=m;t.classList.add("on");setTimeout(function(){t.classList.remove("on");},2500);}
+window.burst=function(){var cx=innerWidth/2,cy=innerHeight/2,em=["+","x","o","~","*"];for(var i=0;i<5;i++){var el=document.createElement("div");el.className="hb";el.textContent=em[i];var a=(i/5)*Math.PI*2,d=80+Math.random()*60;el.style.cssText="left:"+cx+"px;top:"+cy+"px;--tx:"+Math.cos(a)*d+"px;--ty:"+(Math.sin(a)*d-60)+"px;";document.body.appendChild(el);(function(e){setTimeout(function(){e.remove();},1300);})(el);}}
+window.compressImg=function(dataUrl,maxW,q){return new Promise(function(res){var img=new Image();img.onload=function(){var c=document.createElement("canvas"),w=img.width,h=img.height;if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}c.width=w;c.height=h;c.getContext("2d").drawImage(img,0,0,w,h);res(c.toDataURL("image/jpeg",q||0.6));};img.src=dataUrl;});}
+window.closePV=function(){document.getElementById("pv").classList.remove("on");}
+window.openPV=function(url){document.getElementById("pvimg").src=url;document.getElementById("pv").classList.add("on");}
 (function(){var c=document.getElementById("cv"),x=c.getContext("2d"),W,H,p=[];function r(){W=c.width=innerWidth;H=c.height=innerHeight;}window.addEventListener("resize",r);r();for(var i=0;i<50;i++)p.push({x:Math.random()*1200,y:Math.random()*900,r:Math.random()*1.4+.4,a:Math.random()*Math.PI*2,s:Math.random()*.3+.1,o:Math.random()*.5+.2,u:Math.random()*Math.PI*2});(function loop(){x.clearRect(0,0,W,H);var t=Date.now()/1000;for(var i=0;i<p.length;i++){var q=p[i];q.x+=Math.cos(q.a)*q.s;q.y+=Math.sin(q.a)*q.s;if(q.x<0)q.x=W;if(q.x>W)q.x=0;if(q.y<0)q.y=H;if(q.y>H)q.y=0;x.beginPath();x.arc(q.x,q.y,q.r,0,Math.PI*2);x.fillStyle="rgba(192,57,90,"+(q.o*(0.7+0.3*Math.sin(t*1.2+q.u)))+")";x.fill();}requestAnimationFrame(loop);})();})();
-function selWho(w){who=w;document.getElementById("wb-K").className="who-btn"+(w==="K"?" on":"");document.getElementById("wb-M").className="who-btn"+(w==="M"?" on":"");}
-function enterApp(){
+window.selWho=function(w){who=w;document.getElementById("wb-K").className="who-btn"+(w==="K"?" on":"");document.getElementById("wb-M").className="who-btn"+(w==="M"?" on":"");}
+window.enterApp=function(){
 document.getElementById("sp").classList.remove("on");
 document.getElementById("aw").classList.add("on");
 initHome();renderPhotos();renderWishes();startFirebase();
 }
-function initHome(){
+window.initHome=function(){
 var rnd=PHOTOS[Math.floor(Math.random()*PHOTOS.length)];
 document.getElementById("splashImg").src=rnd;
 document.getElementById("homeImg").src=rnd;
@@ -205,7 +205,7 @@ tick();setInterval(tick,1000);
 var td=new Date();if(td.getMonth()===D.getMonth()&&td.getDate()===D.getDate()&&td.getFullYear()>D.getFullYear()){var yr=td.getFullYear()-D.getFullYear();document.getElementById("anniv-banner").innerHTML="<div class=\"anniv\"><h2>Feliz Aniversario!</h2><p>"+yr+" anos de amor!</p></div>";}
 if("Notification"in window&&Notification.permission==="default")Notification.requestPermission();
 }
-function startFirebase(){
+window.startFirebase=function(){
 db.collection("chat").orderBy("ts","asc").onSnapshot(function(snap){
 var msgs=[];snap.forEach(function(d){msgs.push(Object.assign({id:d.id},d.data()));});
 renderChat(msgs);
@@ -229,8 +229,8 @@ else{el.textContent="";}
 });
 },2000);
 }
-function updateStatus(){db.collection("status").doc(who).set({ts:Date.now(),who:who});}
-function loadStatus(){
+window.updateStatus=function(){db.collection("status").doc(who).set({ts:Date.now(),who:who});}
+window.loadStatus=function(){
 ["K","M"].forEach(function(w){
 db.collection("status").doc(w).get().then(function(s){
 var dot=document.getElementById("dot-"+w),st=document.getElementById("st-"+w);
@@ -239,8 +239,8 @@ else{st.textContent="nunca acessou";}
 });
 });
 }
-function chatSend(){var inp=document.getElementById("chat-in"),txt=inp.value.trim();if(!txt)return;inp.value="";db.collection("chat").add({type:"text",text:txt,who:who,ts:firebase.firestore.FieldValue.serverTimestamp()});db.collection("typing").doc(who).set({typing:false,ts:Date.now()});burst();}
-function chatTyping(){db.collection("typing").doc(who).set({typing:true,ts:Date.now()});clearTimeout(typingTm);typingTm=setTimeout(function(){db.collection("typing").doc(who).set({typing:false,ts:Date.now()});},3000);}
+window.chatSend=function(){var inp=document.getElementById("chat-in"),txt=inp.value.trim();if(!txt)return;inp.value="";db.collection("chat").add({type:"text",text:txt,who:who,ts:firebase.firestore.FieldValue.serverTimestamp()});db.collection("typing").doc(who).set({typing:false,ts:Date.now()});burst();}
+window.chatTyping=function(){db.collection("typing").doc(who).set({typing:true,ts:Date.now()});clearTimeout(typingTm);typingTm=setTimeout(function(){db.collection("typing").doc(who).set({typing:false,ts:Date.now()});},3000);}
 document.getElementById("fin-n").onchange=function(e){sendPhoto(e,"normal");};
 document.getElementById("fin-b").onchange=function(e){sendPhoto(e,"blur");};
 document.getElementById("fin-g").onchange=function(e){
@@ -248,12 +248,12 @@ var f=e.target.files[0];if(!f)return;
 var r=new FileReader();r.onload=function(v){compressImg(v.target.result,800,.65).then(function(c){db.collection("gallery").add({url:c,ts:firebase.firestore.FieldValue.serverTimestamp()});toast("Foto salva!");});};
 r.readAsDataURL(f);e.target.value="";
 };
-function sendPhoto(e,mode){
+window.sendPhoto=function(e,mode){
 var f=e.target.files[0];if(!f)return;
 var r=new FileReader();r.onload=function(v){compressImg(v.target.result,600,.55).then(function(c){db.collection("chat").add({type:"photo",mode:mode,url:c,who:who,ts:firebase.firestore.FieldValue.serverTimestamp()});toast(mode==="blur"?"Foto privada enviada!":"Foto enviada!");burst();});};
 r.readAsDataURL(f);e.target.value="";
 }
-function renderChat(msgs){
+window.renderChat=function(msgs){
 var el=document.getElementById("chat-msgs");if(!el)return;
 if(!msgs.length){el.innerHTML="<div style=\"text-align:center;color:var(--mu);padding:40px;font-style:italic\">Diga oi pro amor!</div>";return;}
 var html="";
@@ -269,29 +269,29 @@ var reac=renderReacoes(m.id,m.reacoes||null);html+="<div class=\""+cls+"\">"+bod
 }
 el.innerHTML=html;el.scrollTop=el.scrollHeight;
 }
-function setWho2(w){who2=w;document.getElementById("ck").className="wc"+(w==="K"?" on":"");document.getElementById("cm").className="wc"+(w==="M"?" on":"");}
-function sendMsg(){var ta=document.getElementById("mta"),t=ta.value.trim();if(!t)return;db.collection("notas").add({f:who2==="K"?"Kadu":"Maria",t:t,ts:firebase.firestore.FieldValue.serverTimestamp()});ta.value="";toast("Mensagem salva!");burst();}
-function renderMsgs(){
+window.setWho2=function(w){who2=w;document.getElementById("ck").className="wc"+(w==="K"?" on":"");document.getElementById("cm").className="wc"+(w==="M"?" on":"");}
+window.sendMsg=function(){var ta=document.getElementById("mta"),t=ta.value.trim();if(!t)return;db.collection("notas").add({f:who2==="K"?"Kadu":"Maria",t:t,ts:firebase.firestore.FieldValue.serverTimestamp()});ta.value="";toast("Mensagem salva!");burst();}
+window.renderMsgs=function(){
 var el=document.getElementById("mlist");if(!el)return;
 if(!notasMsgs.length){el.innerHTML="<div style=\"text-align:center;color:var(--mu);padding:40px;font-style:italic\">Nenhuma mensagem ainda...</div>";return;}
 var html="";for(var i=0;i<notasMsgs.length;i++){var m=notasMsgs[i],d=m.ts&&m.ts.toDate?m.ts.toDate().toLocaleDateString("pt-BR"):"--";html+="<div class=\"mc\"><div class=\"mf\">De "+esc(m.f||"")+"</div><div class=\"mt\">"+esc(m.t||"")+"</div><div class=\"md\">"+d+"</div></div>";}
 el.innerHTML=html;
 }
-function renderPhotos(){
+window.renderPhotos=function(){
 var g=document.getElementById("pgr");if(!g)return;
 var all=galleryPhotos.concat(PHOTOS);
 var html="";for(var i=0;i<all.length;i++){html+="<div class=\"pi\"><img src=\""+all[i]+"\" loading=\"lazy\" onclick=\"openPV(this.src)\"/></div>";}
 html+="<div class=\"pad\" onclick=\"document.getElementById('fin-g').click()\"><svg width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><line x1=\"12\" y1=\"8\" x2=\"12\" y2=\"16\"/><line x1=\"8\" y1=\"12\" x2=\"16\" y2=\"12\"/></svg></div>";
 g.innerHTML=html;
 }
-function drawExcl(cat){var pool=EXCL[cat],hist=exclH[cat],avail=[];for(var i=0;i<pool.length;i++){if(hist.indexOf(i)<0)avail.push(i);}var idx=avail.length>0?avail[Math.floor(Math.random()*avail.length)]:Math.floor(Math.random()*pool.length);hist.push(idx);if(hist.length>4)hist.shift();var labels={safada:"Safada",romantica:"Romantica",sedutora:"Sedutora"};document.getElementById("excl-out").innerHTML="<div class=\"excl-card\"><div class=\"ef\">"+labels[cat]+"</div><div class=\"et\">"+pool[idx]+"</div></div>";burst();toast("Nova mensagem exclusiva!");}
-function addWish(){var i=document.getElementById("winput"),t=i.value.trim();if(!t)return;wishes.unshift({t:t,d:false});lsSet("mk_wishes",wishes);i.value="";renderWishes();toast("Desejo adicionado!");}
-function toggleWish(i){var l=wishes.length?wishes:dw.map(function(x){return{t:x.t,d:false}});l[i].d=!l[i].d;wishes=l;lsSet("mk_wishes",wishes);renderWishes();}
-function renderWishes(){var el=document.getElementById("wlist");if(!el)return;var l=wishes.length?wishes:dw.map(function(x){return{t:x.t,d:false}});var html="";for(var i=0;i<l.length;i++){var w=l[i];html+="<div class=\"wi\"><div class=\"wck"+(w.d?" on":"")+"\" onclick=\"toggleWish("+i+")\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"><polyline points=\"20 6 9 17 4 12\"/></svg></div><div class=\"wtxt"+(w.d?" on":"")+"\">"+ esc(w.t)+"</div></div>";}el.innerHTML=html;}
-function go(n){var pgs=document.querySelectorAll(".pg");for(var i=0;i<pgs.length;i++)pgs[i].classList.remove("on");var nbs=document.querySelectorAll(".nb");for(var i=0;i<nbs.length;i++)nbs[i].classList.remove("on");document.getElementById("pg-"+n).classList.add("on");var nb=document.getElementById("nb-"+n);if(nb)nb.classList.add("on");if(n==="wishes")renderWishes();if(n==="photos")renderPhotos();document.querySelector(".pa").scrollTop=0;}
-function toggleMusic(){if(!audioEl){audioEl=new Audio("musica.mp3");audioEl.loop=true;audioEl.addEventListener("timeupdate",function(){if(!audioEl.duration)return;var f=document.getElementById("mpfill");if(f)f.style.width=((audioEl.currentTime/audioEl.duration)*100)+"%";});}var btn=document.getElementById("mpbtn");if(audioEl.paused){audioEl.play().then(function(){btn.innerHTML="&#9646;&#9646;";}).catch(function(){toast("Adicione musica.mp3");});}else{audioEl.pause();btn.innerHTML="&#9654;";}}
-function seekMusic(e){if(!audioEl||!audioEl.duration)return;audioEl.currentTime=(e.offsetX/e.currentTarget.offsetWidth)*audioEl.duration;}
-function callWA(t){var target=who==="K"?MARIA_WA:KADU_WA;window.open("https://wa.me/"+target,"_blank");}
+window.drawExcl=function(cat){var pool=EXCL[cat],hist=exclH[cat],avail=[];for(var i=0;i<pool.length;i++){if(hist.indexOf(i)<0)avail.push(i);}var idx=avail.length>0?avail[Math.floor(Math.random()*avail.length)]:Math.floor(Math.random()*pool.length);hist.push(idx);if(hist.length>4)hist.shift();var labels={safada:"Safada",romantica:"Romantica",sedutora:"Sedutora"};document.getElementById("excl-out").innerHTML="<div class=\"excl-card\"><div class=\"ef\">"+labels[cat]+"</div><div class=\"et\">"+pool[idx]+"</div></div>";burst();toast("Nova mensagem exclusiva!");}
+window.addWish=function(){var i=document.getElementById("winput"),t=i.value.trim();if(!t)return;wishes.unshift({t:t,d:false});lsSet("mk_wishes",wishes);i.value="";renderWishes();toast("Desejo adicionado!");}
+window.toggleWish=function(i){var l=wishes.length?wishes:dw.map(function(x){return{t:x.t,d:false}});l[i].d=!l[i].d;wishes=l;lsSet("mk_wishes",wishes);renderWishes();}
+window.renderWishes=function(){var el=document.getElementById("wlist");if(!el)return;var l=wishes.length?wishes:dw.map(function(x){return{t:x.t,d:false}});var html="";for(var i=0;i<l.length;i++){var w=l[i];html+="<div class=\"wi\"><div class=\"wck"+(w.d?" on":"")+"\" onclick=\"toggleWish("+i+")\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"><polyline points=\"20 6 9 17 4 12\"/></svg></div><div class=\"wtxt"+(w.d?" on":"")+"\">"+ esc(w.t)+"</div></div>";}el.innerHTML=html;}
+window.go=function(n){var pgs=document.querySelectorAll(".pg");for(var i=0;i<pgs.length;i++)pgs[i].classList.remove("on");var nbs=document.querySelectorAll(".nb");for(var i=0;i<nbs.length;i++)nbs[i].classList.remove("on");document.getElementById("pg-"+n).classList.add("on");var nb=document.getElementById("nb-"+n);if(nb)nb.classList.add("on");if(n==="wishes")renderWishes();if(n==="photos")renderPhotos();document.querySelector(".pa").scrollTop=0;}
+window.toggleMusic=function(){if(!audioEl){audioEl=new Audio("musica.mp3");audioEl.loop=true;audioEl.addEventListener("timeupdate",function(){if(!audioEl.duration)return;var f=document.getElementById("mpfill");if(f)f.style.width=((audioEl.currentTime/audioEl.duration)*100)+"%";});}var btn=document.getElementById("mpbtn");if(audioEl.paused){audioEl.play().then(function(){btn.innerHTML="&#9646;&#9646;";}).catch(function(){toast("Adicione musica.mp3");});}else{audioEl.pause();btn.innerHTML="&#9654;";}}
+window.seekMusic=function(e){if(!audioEl||!audioEl.duration)return;audioEl.currentTime=(e.offsetX/e.currentTarget.offsetWidth)*audioEl.duration;}
+window.callWA=function(t){var target=who==="K"?MARIA_WA:KADU_WA;window.open("https://wa.me/"+target,"_blank");}
 );
 });
 navigator.serviceWorker.register("sw.js?v=1772754935").then(function(reg){
@@ -315,14 +315,14 @@ window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();def
 document.addEventListener("click",function(e){if(e.target.closest(".qc,.sendb,.wab,.sb,.excl-btn"))burst();});
 initHome();
 var muList=[],muIdx=-1,muAudio=null;
-function startMusicListener(){db.collection("musicas").orderBy("ts","asc").onSnapshot(function(s){muList=[];s.forEach(function(d){muList.push(Object.assign({id:d.id},d.data()));});renderMusicas();});}
-function addMusica(){var u=document.getElementById("mu-url").value.trim(),n=document.getElementById("mu-nome").value.trim()||"Musica";if(!u)return;db.collection("musicas").add({url:u,nome:n,ts:firebase.firestore.FieldValue.serverTimestamp()});document.getElementById("mu-url").value="";document.getElementById("mu-nome").value="";toast("Musica adicionada!");}
-function delMusica(id,e){e.stopPropagation();db.collection("musicas").doc(id).delete();toast("Removida!");}
-function playMusica(idx){muIdx=idx;var m=muList[idx];var pl=document.getElementById("mu-player"),au=document.getElementById("mu-audio"),nm=document.getElementById("mu-playing");pl.style.display="block";au.src=m.url;au.play().catch(function(){toast("Nao foi possivel tocar. Verifique o link.");});nm.textContent="Tocando: "+m.nome;renderMusicas();}
-function renderMusicas(){var el=document.getElementById("mu-list");if(!el)return;if(!muList.length){el.innerHTML="<div style=\"text-align:center;color:var(--mu);padding:30px;font-style:italic\">Nenhuma musica ainda. Cole um link acima!</div>";return;}var h="";for(var i=0;i<muList.length;i++){var m=muList[i],isp=muIdx===i;h+="<div class=\"mu-item"+(isp?" playing":"")+"\" onclick=\"playMusica("+i+")\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><polygon points=\"5 3 19 12 5 21 5 3\" fill=\""+( isp?"var(--rose)":"none")+"\"/></svg><div class=\"mu-info\"><div class=\"mu-name\">"+esc(m.nome)+"</div><div class=\"mu-url\">"+esc(m.url)+"</div></div><button class=\"mu-del\" onclick=\"delMusica('"+m.id+"',event)\">&#128465;</button></div>";}el.innerHTML=h;}
+window.startMusicListener=function(){db.collection("musicas").orderBy("ts","asc").onSnapshot(function(s){muList=[];s.forEach(function(d){muList.push(Object.assign({id:d.id},d.data()));});renderMusicas();});}
+window.addMusica=function(){var u=document.getElementById("mu-url").value.trim(),n=document.getElementById("mu-nome").value.trim()||"Musica";if(!u)return;db.collection("musicas").add({url:u,nome:n,ts:firebase.firestore.FieldValue.serverTimestamp()});document.getElementById("mu-url").value="";document.getElementById("mu-nome").value="";toast("Musica adicionada!");}
+window.delMusica=function(id,e){e.stopPropagation();db.collection("musicas").doc(id).delete();toast("Removida!");}
+window.playMusica=function(idx){muIdx=idx;var m=muList[idx];var pl=document.getElementById("mu-player"),au=document.getElementById("mu-audio"),nm=document.getElementById("mu-playing");pl.style.display="block";au.src=m.url;au.play().catch(function(){toast("Nao foi possivel tocar. Verifique o link.");});nm.textContent="Tocando: "+m.nome;renderMusicas();}
+window.renderMusicas=function(){var el=document.getElementById("mu-list");if(!el)return;if(!muList.length){el.innerHTML="<div style=\"text-align:center;color:var(--mu);padding:30px;font-style:italic\">Nenhuma musica ainda. Cole um link acima!</div>";return;}var h="";for(var i=0;i<muList.length;i++){var m=muList[i],isp=muIdx===i;h+="<div class=\"mu-item"+(isp?" playing":"")+"\" onclick=\"playMusica("+i+")\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><polygon points=\"5 3 19 12 5 21 5 3\" fill=\""+( isp?"var(--rose)":"none")+"\"/></svg><div class=\"mu-info\"><div class=\"mu-name\">"+esc(m.nome)+"</div><div class=\"mu-url\">"+esc(m.url)+"</div></div><button class=\"mu-del\" onclick=\"delMusica('"+m.id+"',event)\">&#128465;</button></div>";}el.innerHTML=h;}
 
 
-function renderCal(){
+window.renderCal=function(){
   var y=calDate.getFullYear(),m=calDate.getMonth();
   var meses=["Janeiro","Fevereiro","Marco","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
   document.getElementById("cal-month-lbl").textContent=meses[m]+" "+y;
@@ -338,18 +338,18 @@ function renderCal(){
   }
   document.getElementById("cal-grid").innerHTML=h;
 }
-function addReacao(msgId,em){
+window.addReacao=function(msgId,em){
   var ref=db.collection("chat").doc(msgId);
   db.runTransaction(function(t){return t.get(ref).then(function(d){var r=(d.data().reacoes)||{};r[em]=(r[em]||0)+1;t.update(ref,{reacoes:r});});});
 }
-function renderReacoes(msgId,reacoes){
+window.renderReacoes=function(msgId,reacoes){
   if(!reacoes)return"";
   var ems=["❤️","😂","😮","😢","🔥"],h='<div class="reacao-bar">';
   ems.forEach(function(e){var c=reacoes[e]||0;if(c>0)h+='<button class="reacao-btn" onclick="addReacao(''+msgId+'',''+e+'')">'+e+'<span class="reacao-count">'+c+"</span></button>";});
   h+='<button class="reacao-btn" onclick="showReacaoPicker(''+msgId+'')">+</button></div>';
   return h;
 }
-function showReacaoPicker(msgId){
+window.showReacaoPicker=function(msgId){
   var ems=["❤️","😂","😮","😢","🔥"],h="";
   ems.forEach(function(e){h+='<button style="font-size:1.4rem;background:none;border:none;cursor:pointer" onclick="addReacao(''+msgId+'',''+e+'');closeModal('modal-reacao')">'+e+"</button>";});
   var m=document.getElementById("modal-reacao");
@@ -358,8 +358,8 @@ function showReacaoPicker(msgId){
 }
 
 var _VER="1772754935";
-function checkUpdate(){fetch("index.html?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text();}).then(function(t){var m=t.match(/
-function renderCal(){
+window.checkUpdate=function(){fetch("index.html?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text();}).then(function(t){var m=t.match(/
+window.renderCal=function(){
   var y=calDate.getFullYear(),m=calDate.getMonth();
   var meses=["Janeiro","Fevereiro","Marco","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
   document.getElementById("cal-month-lbl").textContent=meses[m]+" "+y;
@@ -375,18 +375,18 @@ function renderCal(){
   }
   document.getElementById("cal-grid").innerHTML=h;
 }
-function addReacao(msgId,em){
+window.addReacao=function(msgId,em){
   var ref=db.collection("chat").doc(msgId);
   db.runTransaction(function(t){return t.get(ref).then(function(d){var r=(d.data().reacoes)||{};r[em]=(r[em]||0)+1;t.update(ref,{reacoes:r});});});
 }
-function renderReacoes(msgId,reacoes){
+window.renderReacoes=function(msgId,reacoes){
   if(!reacoes)return"";
   var ems=["❤️","😂","😮","😢","🔥"],h='<div class="reacao-bar">';
   ems.forEach(function(e){var c=reacoes[e]||0;if(c>0)h+='<button class="reacao-btn" onclick="addReacao(''+msgId+'',''+e+'')">'+e+'<span class="reacao-count">'+c+"</span></button>";});
   h+='<button class="reacao-btn" onclick="showReacaoPicker(''+msgId+'')">+</button></div>';
   return h;
 }
-function showReacaoPicker(msgId){
+window.showReacaoPicker=function(msgId){
   var ems=["❤️","😂","😮","😢","🔥"],h="";
   ems.forEach(function(e){h+='<button style="font-size:1.4rem;background:none;border:none;cursor:pointer" onclick="addReacao(''+msgId+'',''+e+'');closeModal('modal-reacao')">'+e+"</button>";});
   var m=document.getElementById("modal-reacao");
@@ -396,6 +396,33 @@ function showReacaoPicker(msgId){
 
 var _VER="(\d+)"/);if(m&&m[1]!==_VER){if(confirm("Nova versao disponivel! Atualizar agora?")){window.location.reload(true);}}}).catch(function(){});}
 setInterval(checkUpdate,30000);
+
+window.openModal=function(id){document.getElementById(id).classList.add("on");}
+window.closeModal=function(id){document.getElementById(id).classList.remove("on");}
+window.playNotifSound=function(){try{var s=document.getElementById("notif-snd");s.currentTime=0;s.play().catch(function(){});}catch(e){}}
+window.setHumor=function(em,nome){db.collection("humor").doc(who).set({em:em,nome:nome,who:who,ts:Date.now()});toast("Humor salvo: "+em);loadHumor();document.querySelectorAll(".hm-btn").forEach(function(b){b.classList.remove("on");if(b.getAttribute("onclick")&&b.getAttribute("onclick").indexOf(em)>-1)b.classList.add("on");});}
+window.loadHumor=function(){["K","M"].forEach(function(w){db.collection("humor").doc(w).get().then(function(s){var el=document.getElementById("humor-show");if(!el||!s.exists)return;var d=s.data(),cards=el.querySelectorAll(".hs-card"),idx=w==="K"?0:1;if(cards[idx])cards[idx].innerHTML='<div class="hs-em">'+d.em+'</div><div class="hs-name">'+(w==="K"?"Kadu":"Maria")+'</div><div class="hs-mood">'+d.nome+"</div>";});});}
+window.initHumorShow=function(){document.getElementById("humor-show").innerHTML='<div class="hs-card"><div class="hs-em">?</div><div class="hs-name">Kadu</div><div class="hs-mood">...</div></div><div class="hs-card"><div class="hs-em">?</div><div class="hs-name">Maria</div><div class="hs-mood">...</div></div>';loadHumor();setInterval(loadHumor,30000);}
+window.setDiarioWho=function(w){diarioWho=w;document.getElementById("dk").className="wc"+(w==="K"?" on":"");document.getElementById("dm").className="wc"+(w==="M"?" on":"");}
+window.saveDiario=function(){var t=document.getElementById("diario-txt").value.trim();if(!t)return;db.collection("diario").add({autor:diarioWho==="K"?"Kadu":"Maria",txt:t,ts:firebase.firestore.FieldValue.serverTimestamp()});document.getElementById("diario-txt").value="";toast("Publicado no diario!");}
+window.startDiarioListener=function(){db.collection("diario").orderBy("ts","desc").onSnapshot(function(s){var el=document.getElementById("diario-list");if(!el)return;if(s.empty){el.innerHTML='<div style="text-align:center;color:var(--mu);padding:30px;font-style:italic">Nenhuma entrada ainda...</div>';return;}var h="";s.forEach(function(d){var m=d.data(),dt=m.ts&&m.ts.toDate?m.ts.toDate().toLocaleDateString("pt-BR"):"--";h+='<div class="diario-item"><div class="di-autor">'+esc(m.autor||"")+'</div><div class="di-txt">'+esc(m.txt||"")+'</div><div class="di-data">'+dt+"</div></div>";});el.innerHTML=h;});}
+window.openCofreModal=function(){document.getElementById("cofre-pin-in").value="";openModal("modal-cofre");setTimeout(function(){document.getElementById("cofre-pin-in").focus();},300);}
+window.checkCofrePin=function(){var p=document.getElementById("cofre-pin-in").value;if(p==="1234"){cofreUnlocked=true;closeModal("modal-cofre");document.getElementById("cofre-locked").style.display="none";document.getElementById("cofre-content").style.display="block";loadCofre();}else{toast("Senha errada!");document.getElementById("cofre-pin-in").value="";}}
+window.loadCofre=function(){db.collection("cofre").orderBy("ts","desc").onSnapshot(function(s){var g=document.getElementById("cofre-grid");if(!g)return;if(s.empty){g.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--mu);padding:30px;font-style:italic">Nenhuma foto no cofre ainda</div>';return;}var h="";s.forEach(function(d){var m=d.data();h+='<div class="cofre-item"><img src="'+m.url+'" loading="lazy" onclick="openPV(this.src)"/><button class="cofre-del" onclick="event.stopPropagation();db.collection('cofre').doc(''+d.id+'').delete()">x</button></div>';});g.innerHTML=h;});}
+window.saveBilhete=function(){var msg=document.getElementById("bil-msg").value.trim(),data=document.getElementById("bil-data").value,nome=document.getElementById("bil-nome").value.trim()||(who==="K"?"Kadu":"Maria");if(!msg||!data)return;db.collection("bilhetes").add({msg:msg,data:data,nome:nome,ts:firebase.firestore.FieldValue.serverTimestamp()});closeModal("modal-bilhete");document.getElementById("bil-msg").value="";document.getElementById("bil-data").value="";toast("Bilhetinho guardado!");}
+window.startBilhetesListener=function(){db.collection("bilhetes").orderBy("data","asc").onSnapshot(function(s){var el=document.getElementById("bilhete-list");if(!el)return;if(s.empty){el.innerHTML='<div style="text-align:center;color:var(--mu);padding:30px;font-style:italic">Nenhum bilhetinho ainda...</div>';return;}var today=new Date().toISOString().split("T")[0],h="";s.forEach(function(d){var m=d.data(),open=m.data<=today,dt=new Date(m.data+"T12:00:00").toLocaleDateString("pt-BR");if(open){h+='<div class="bilhete-item"><div class="bilhete-open">'+esc(m.msg)+'</div><div class="bilhete-from">De: '+esc(m.nome)+" - "+dt+"</div></div>";}else{h+='<div class="bilhete-item"><div class="bilhete-locked"><span>&#128274;</span><div class="bilhete-info"><h3>Bilhetinho secreto</h3><p>Abre em '+dt+"</p></div></div></div>";}});el.innerHTML=h;});}
+window.drawJogo=function(t){var pool=t==="verdade"?VERDADES:DESAFIOS,hist=t==="verdade"?jogoH.v:jogoH.d,avail=[];for(var i=0;i<pool.length;i++){if(hist.indexOf(i)<0)avail.push(i);}if(!avail.length){jogoH.v=[];jogoH.d=[];avail=pool.map(function(_,i){return i;});}var ri=avail[Math.floor(Math.random()*avail.length)];hist.push(ri);var cor=t==="verdade"?"var(--rose)":"#1a3a6b";document.getElementById("jogo-out").innerHTML='<div style="margin:0 20px;background:var(--card);border:2px solid '+cor+';border-radius:16px;padding:24px;text-align:center"><div style="font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:'+cor+';margin-bottom:10px">'+(t==="verdade"?"&#10067; VERDADE":"&#128293; DESAFIO")+'</div><div style="font-family:Playfair Display,serif;font-style:italic;font-size:1.05rem;line-height:1.6">'+pool[ri]+"</div></div>";burst();}
+window.calNav=function(d){calDate.setMonth(calDate.getMonth()+d);renderCal();}
+window.calDayClick=function(ds){var ev=calEventos.find(function(e){return e.data===ds;});if(ev)toast(ev.nome+" - "+new Date(ds+"T12:00:00").toLocaleDateString("pt-BR"));}
+window.startCalListener=function(){db.collection("eventos").orderBy("data","asc").onSnapshot(function(s){calEventos=[];s.forEach(function(d){calEventos.push(Object.assign({id:d.id},d.data()));});renderCal();renderEventos();});}
+window.renderEventos=function(){var el=document.getElementById("ev-list");if(!el)return;if(!calEventos.length){el.innerHTML='<div style="text-align:center;color:var(--mu);padding:20px;font-style:italic">Nenhum evento ainda</div>';return;}var h="",today=new Date().toISOString().split("T")[0];calEventos.forEach(function(e){var dt=new Date(e.data+"T12:00:00").toLocaleDateString("pt-BR"),past=e.data<today;h+='<div class="ev-item" style="opacity:'+(past?.5:1)+'"><div class="ev-dot"></div><div class="ev-info"><div class="ev-name">'+esc(e.nome)+'</div><div class="ev-date">'+dt+'</div></div><button class="ev-del" onclick="db.collection('eventos').doc(''+e.id+'').delete()">&#128465;</button></div>';});el.innerHTML=h;}
+window.saveEvento=function(){var n=document.getElementById("ev-nome-in").value.trim(),d=document.getElementById("ev-data-in").value;if(!n||!d)return;db.collection("eventos").add({nome:n,data:d,ts:firebase.firestore.FieldValue.serverTimestamp()});closeModal("modal-evento");document.getElementById("ev-nome-in").value="";document.getElementById("ev-data-in").value="";toast("Evento salvo!");}
+window.saveCountdown=function(){var d=document.getElementById("cd-data-in").value,n=document.getElementById("cd-nome-in").value.trim()||"Nosso encontro";if(!d)return;db.collection("countdown").doc("next").set({data:d,nome:n});closeModal("modal-countdown");loadCountdown();toast("Contagem salva!");}
+window.loadCountdown=function(){db.collection("countdown").doc("next").get().then(function(s){if(!s.exists){document.getElementById("cd-card").style.display="none";document.getElementById("cd-card-empty").style.display="block";return;}var d=s.data(),dt=new Date(d.data+"T12:00:00"),today=new Date();today.setHours(0,0,0,0);var diff=Math.ceil((dt-today)/86400000);document.getElementById("cd-card").style.display="block";document.getElementById("cd-card-empty").style.display="none";document.getElementById("cd-num").textContent=diff<=0?"HOJE!":diff;document.getElementById("cd-event").textContent=d.nome;});}
+var diarioWho="K",calDate=new Date(),calEventos=[],cofreUnlocked=false;
+var jogoH={v:[],d:[]};
+var VERDADES=["Qual foi seu pensamento mais safado sobre mim?","O que voce mais gosta no meu corpo?","Ja fantasiou com alguma situacao nossa?","Qual e a sua parte favorita minha?","O que voce ainda quer fazer comigo?","Qual foi o momento mais especial entre nos?","O que te atrai mais em mim?","Voce ja me observou sem eu saber?","Qual musica te lembra de mim?","O que voce sente quando fico longe?","Qual e seu lugar favorito para me beijar?","Qual foi o dia que mais sentiu minha falta?","O que te deixa com mais tesao em mim?","Voce ja sonhou comigo? Como foi?","O que voce mais gosta de fazer junto comigo?"];
+var DESAFIOS=["Manda uma foto com seu melhor sorriso agora","Escreva 3 coisas que ama em mim","Manda uma mensagem de voz dizendo algo romantico","Fala o que ta pensando agora sem filtro","Manda um emoji que resume como ta se sentindo","Conta um segredo que nunca me contou","Faz uma declaracao de amor em uma frase","Manda uma foto do seu lugar favorito da casa","Descreve nosso primeiro encontro em 3 palavras","Fala uma coisa que quer fazer comigo essa semana","Manda uma musica que representa voce agora","Escreve como imagina nosso futuro juntos","Conta o que mais gosta em nosso relacionamento","Manda uma foto sua agora do jeito que ta","Fala uma coisa que nunca teve coragem de dizer"];
 </script>
 <div class="modal" id="modal-cofre"><div class="modal-box"><h2>&#128274; Cofre de Fotos</h2><input class="modal-inp" id="cofre-pin-in" type="password" maxlength="4" placeholder="Digite a senha (4 digitos)"/><div class="modal-row"><button class="mbtn mbtn-c" onclick="closeModal('modal-cofre')">Cancelar</button><button class="mbtn mbtn-ok" onclick="checkCofrePin()">Entrar</button></div></div></div>
 <div class="modal" id="modal-bilhete"><div class="modal-box"><h2>&#128140; Novo Bilhetinho</h2><input class="modal-inp" id="bil-msg" placeholder="Sua mensagem secreta..."/><input class="modal-inp" id="bil-data" type="date"/><input class="modal-inp" id="bil-nome" placeholder="Nome (Kadu ou Maria)"/><div class="modal-row"><button class="mbtn mbtn-c" onclick="closeModal('modal-bilhete')">Cancelar</button><button class="mbtn mbtn-ok" onclick="saveBilhete()">Salvar</button></div></div></div>
